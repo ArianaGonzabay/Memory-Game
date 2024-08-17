@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Juego de Memoria</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="start-screen" class="start-screen">
+            <h1 class="gfg-heading">Juego de Memoria</h1>
+            <button id="start-button" class="start-button">Iniciar Juego</button>
+        </div>
+
+        <div id="dynamic-cards" class="game-container" style="display: none;">
+            <div class="heading-container">
+                <h1 class="gfg-heading">Juego de Memoria</h1>
+                <h2 class="game-heading">Haz clic en cualquier carta para voltearla!</h2>
+            </div>
+
+            <!-- Contenedor del Temporizador -->
+            <div id="timer-container">
+                <p id="timer">5</p>
+            </div>
+
+            <div class="cards-container" id="cards-container">
+                <!-- Cartas se generan dinámicamente desde JavaScript -->
+            </div>
+
+            <div class="progress-container">
+                <div class="move-counter">Intentos: <span id="moves-count">0</span></div>
+                <button id="restart" class="restart-button">Reiniciar</button>
+            </div>
+        </div>
+
+    <script src="script.js"></script>
+    </div>
+</body>
+
+</html>

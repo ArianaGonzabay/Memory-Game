@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start; 
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.game-container {
+    max-width: 650px;
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-image: linear-gradient(90deg, #fffbd5, #ccc);
+}
+
+.cards-container {
+    display: grid;
+    grid-template-rows: repeat(5, 140px);
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 10px;
+    place-items: center;
+}
+
+.heading-container {
+    text-align: center;
+    margin-bottom: 20px; 
+}
+
+.gfg-heading {
+    color: #0E9D57;
+    margin-bottom: 10px;
+}
+
+h2.game-heading {
+    font-size: 18px;
+    margin-bottom: 15px; 
+}
+
+.card {
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.outline-image {
+    position: absolute;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    height: 140px;
+    width: 100px;
+}
+
+.card-image {
+    height: 140px;
+    width: 100px;
+    transform: rotateY(90deg);
+    transition: all ease-in 0.25s;
+    mix-blend-mode: multiply;
+}
+
+.progress-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 40px 0 10px 0;
+}
+
+.move-counter {
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+}
+
+.restart-button {
+    padding: 10px 20px;
+    background-color: #0E9D57;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.restart-button:hover {
+    background-color: transparent;
+    border: 1px solid #0E9D57;
+    color: #0E9D57;
+}
+
+/* Dynamic classes that are being added by JavaScript */
+.toggled .card-image {
+    transform: rotateY(0deg);
+    transition-delay: 0.25s;
+}
+
+.item .outline-image {
+    transition: all ease-in 0.25s;
+    transition-delay: 0.25s;
+}
+
+.toggled .outline-image {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+}
+
+@media screen and (max-width: 767px) {
+    .game-container {
+        width: 100%;
+    }
+
+    .cards-container {
+        grid-template-rows: repeat(5, 100px);
+        grid-template-columns: repeat(3, 75px);
+        grid-gap: 8px;
+    }
+
+    .outline-image {
+        height: 100px;
+        width: 75px;
+    }
+
+    .card-image {
+        height: 100px;
+        width: 75px;
+    }
+
+    .progress-container {
+        margin: 10px 0 10px 0;
+    }
+}
+
+#timer-container {
+    text-align: center; /* Centra el temporizador */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#timer {
+    font-size: 32px;
+    color: #ff0000; 
+    font-weight: bold;
+}
+
+/* Estilo para la pantalla de inicio */
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.start-button {
+    padding: 15px 30px;
+    background-color: #0E9D57;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.start-button:hover {
+    background-color: #0c7a45;
+}
+
