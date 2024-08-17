@@ -2,14 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const cardsContainer = document.getElementById("cards-container");
     const movesCountElement = document.getElementById("moves-count");
     const restartButton = document.getElementById("restart");
-    const startButton = document.getElementById("start-button"); // Botón de inicio
-    const gameContainer = document.getElementById("dynamic-cards"); // Contenedor del juego
-    const startScreen = document.getElementById("start-screen"); // Pantalla de inicio
-    const timerElement = document.getElementById("timer"); // Elemento del temporizador
+    const startButton = document.getElementById("start-button");
+    const gameContainer = document.getElementById("dynamic-cards");
+    const startScreen = document.getElementById("start-screen");
+    const timerElement = document.getElementById("timer");
     let moves = 0;
     let firstCard = null;
     let secondCard = null;
     let lockBoard = true;
+    let totalTime = 0;
 
     const cardImages = [
         "images/0B.png", "images/1B.png", "images/2B.png", "images/3B.png", 
@@ -102,10 +103,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isMatch) {
             disableCards();
-            checkWinCondition();
+            checkWinCondition();  // Verificar si todas las cartas han sido emparejadas
         } else {
             unflipCards();
         }
+    }
+
+    function checkWinCondition() {
+        const allMatched = Array.from(document.querySelectorAll(".card")).every(card =>
+            card.classList.contains("toggled")
+        );
+
+        if (allMatched) {
+            setTimeout(() => {
+                alert(`¡Felicidades! Encontraste el par correcto en ${moves} movimientos.`);
+                saveResult(moves, totalTime);  // Guardar el resultado en Google Sheets
+            }, 500);
+        }
+    }
+
+    function saveResult(moves, timeTaken) {
+        const playerName = prompt('Enter your name:');
+
+        const data = {
+            playerName: playerName,
+            moves: moves,
+            timeTaken: timeTaken
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbwhaOWfNoejeGCWTZFb3B7i3zLT6e4Wlp3fN6Z_zenaf_mdXAhjQQn-Z78HfSbHAHVa6w/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch(error => console.error('Error:', error));
     }
 
     function disableCards() {
@@ -125,18 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetBoard() {
         [firstCard, secondCard, lockBoard] = [null, null, false];
-    }
-
-    function checkWinCondition() {
-        const allMatched = Array.from(document.querySelectorAll(".card")).every(card =>
-            card.classList.contains("toggled")
-        );
-
-        if (allMatched) {
-            setTimeout(() => {
-                alert(`Encontraste el par de cartas en ${moves} intentos! :D`);
-            }, 500);
-        }
     }
 
     function startGame() {
@@ -193,13 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function enableGameplay() {
         lockBoard = false;
-        timerElement.textContent = '';
+        timerElement.textContent = ''; // Limpiar el temporizador después de la visualización
     }
 
     // Maneja el clic en el botón de inicio
     startButton.addEventListener("click", () => {
-        startScreen.style.display = "none"; 
-        gameContainer.style.display = "block"; 
+        startScreen.style.display = "none"; // Oculta la pantalla de inicio
+        gameContainer.style.display = "block"; // Muestra el contenedor del juego
         startGame(); // Inicia el juego
     });
 
