@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let firstCard = null;
     let secondCard = null;
     let lockBoard = true;
-    let totalTime = 0;
 
     const cardImages = [
         "images/0B.png", "images/1B.png", "images/2B.png", "images/3B.png", 
@@ -82,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function flipCard() {
-        if (lockBoard) return;
+        if (lockBoard) return;  // Evitar cualquier interacción si el tablero está bloqueado
         if (this === firstCard) return;
 
         this.classList.add("toggled");
@@ -103,44 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isMatch) {
             disableCards();
-            checkWinCondition();  // Verificar si todas las cartas han sido emparejadas
+            showWinMessage();  // Mostrar el mensaje de victoria
         } else {
             unflipCards();
         }
     }
 
-    function checkWinCondition() {
-        const allMatched = Array.from(document.querySelectorAll(".card")).every(card =>
-            card.classList.contains("toggled")
-        );
-
-        if (allMatched) {
-            setTimeout(() => {
-                alert(`¡Felicidades! Encontraste el par correcto en ${moves} movimientos.`);
-                saveResult(moves, totalTime);  // Guardar el resultado en Google Sheets
-            }, 500);
-        }
-    }
-
-    function saveResult(moves, timeTaken) {
-        const playerName = prompt('Enter your name:');
-
-        const data = {
-            playerName: playerName,
-            moves: moves,
-            timeTaken: timeTaken
-        };
-
-        fetch('https://script.google.com/macros/s/AKfycbwhaOWfNoejeGCWTZFb3B7i3zLT6e4Wlp3fN6Z_zenaf_mdXAhjQQn-Z78HfSbHAHVa6w/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => console.log('Success:', data))
-        .catch(error => console.error('Error:', error));
+    function showWinMessage() {
+        setTimeout(() => {
+            alert(`¡Felicidades! Encontraste el único par correcto en ${moves} intentos.`);
+            lockBoard = true;  // Bloquear el tablero después de ganar
+        }, 500);
     }
 
     function disableCards() {
